@@ -1,0 +1,94 @@
+-- =========================================
+-- BASE DE DATOS: swing-cloud-expediciones
+-- =========================================
+
+CREATE DATABASE IF NOT EXISTS swing_cloud_expediciones;
+USE swing_cloud_expediciones;
+
+-- =========================================
+-- TABLA: SITIO ARQUEOLOGICO
+-- =========================================
+CREATE TABLE sitio_arqueologico (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    pais VARCHAR(100) NOT NULL,
+    anio_descubrimiento INT,
+    estado_conservacion VARCHAR(100)
+);
+
+-- =========================================
+-- TABLA: ARQUEOLOGO
+-- =========================================
+CREATE TABLE arqueologo (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    especialidad VARCHAR(100),
+    nacionalidad VARCHAR(100),
+    anios_experiencia INT
+);
+
+-- =========================================
+-- TABLA: EXPEDICION
+-- =========================================
+CREATE TABLE expedicion (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    fecha_inicio DATE,
+    fecha_fin DATE,
+    sitio_id INT,
+
+    FOREIGN KEY (sitio_id) REFERENCES sitio_arqueologico(id)
+    ON DELETE SET NULL
+);
+
+-- =========================================
+-- TABLA: HALLAZGO
+-- =========================================
+CREATE TABLE hallazgo (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    tipo VARCHAR(100),
+    fecha_descubrimiento DATE,
+    expedicion_id INT,
+
+    FOREIGN KEY (expedicion_id) REFERENCES expedicion(id)
+    ON DELETE SET NULL
+);
+
+-- =========================================
+-- DATOS DE PRUEBA
+-- =========================================
+
+INSERT INTO sitio_arqueologico(nombre, pais, anio_descubrimiento, estado_conservacion)
+VALUES
+('Machu Picchu', 'Perú', 1911, 'Excelente'),
+('Chichén Itzá', 'México', 1923, 'Bueno');
+
+INSERT INTO arqueologo(nombre, especialidad, nacionalidad, anios_experiencia)
+VALUES
+('Juan Pérez', 'Antropología', 'Peruano', 10),
+('Ana López', 'Historia Antigua', 'Mexicana', 8);
+
+INSERT INTO expedicion(nombre, fecha_inicio, fecha_fin, sitio_id)
+VALUES
+('Expedición Andes', '2025-01-10', '2025-02-10', 1),
+('Expedición Maya', '2025-03-01', '2025-04-01', 2);
+
+INSERT INTO hallazgo(nombre, tipo, fecha_descubrimiento, expedicion_id)
+VALUES
+('Cerámica Inca', 'Cerámica', '2025-01-20', 1),
+('Máscara Maya', 'Artefacto', '2025-03-15', 2);
+
+SELECT * FROM arqueologo;
+
+
+
+
+
+
+
+
+
+
+
+
